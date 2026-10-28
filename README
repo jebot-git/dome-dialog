@@ -1,0 +1,21 @@
+Dome Dialog
+===========
+Native FLTK replacement for the Zenity command subset used by Winetricks.
+Built with CMake Release against /opt/fltk-vr/toolkit and the shared DomeD
+appearance headers in ../flterm-xr/xr. The installed command is /usr/bin/zenity;
+the package provides zenity=4.2.2 to preserve Winetricks dependencies.
+
+Supported modes: info, warning, error, question, entry/password, list with
+radiolist/checklist and hidden/printed columns, forms with entries/combos,
+progress from standard input, file selection, and text display. Output uses
+the requested separators. Timeout exits 5; unsupported options exit 2.
+This is a tested subset, not a promise of the entire Zenity command API.
+
+Build and stage as the regular user:
+  cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+  cmake --build build
+  DESTDIR="$PWD/stage" cmake --install build
+Only installation into system paths needs sudo. No GTK or Qt is linked.
+The GPL-3.0-or-later license applies to main.cpp; shared appearance headers
+retain their own MIT license. Build the RPM with python3 tools/package.py build. Seven isolated UI checks
+run with python3 tools/test-dialogs.py build/dome-dialog.
